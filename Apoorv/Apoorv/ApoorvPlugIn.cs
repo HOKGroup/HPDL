@@ -1,4 +1,7 @@
-﻿namespace Apoorv
+﻿using Rhino.UI;
+using Rhino.PlugIns;
+
+namespace Apoorv
 {
     ///<summary>
     /// <para>Every RhinoCommon .rhp assembly must have one and only one PlugIn-derived
@@ -8,7 +11,7 @@
     /// attributes in AssemblyInfo.cs (you might need to click "Project" ->
     /// "Show All Files" to see it in the "Solution Explorer" window).</para>
     ///</summary>
-    public class ApoorvPlugIn : Rhino.PlugIns.PlugIn
+    public class ApoorvPlugIn : PlugIn
 
     {
         public ApoorvPlugIn()
@@ -25,5 +28,12 @@
         // You can override methods here to change the plug-in behavior on
         // loading and shut down, add options pages to the Rhino _Option command
         // and mantain plug-in wide options in a document.
+
+        protected override LoadReturnCode OnLoad(ref string errorMessage)
+        {
+            var panelType = typeof(WpfPanelHost);
+            Panels.RegisterPanel(this, panelType, "HPDL", Properties.Resources.logo);
+            return LoadReturnCode.Success;
+        }
     }
 }
