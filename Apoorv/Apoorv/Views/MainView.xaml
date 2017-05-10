@@ -6,6 +6,34 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button Command="{Binding SelectPointCommand, Mode=OneWay}" Content="SelectPoint" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Select EPW File:" 
+               HorizontalAlignment="Left" 
+               Margin="5,10,0,0" 
+               VerticalAlignment="Top" 
+               FontWeight="Bold"/>
+        <Button Command="{Binding OpenFileDialog, Mode=OneWay}" 
+                Content="..." 
+                Margin="10,36,0,0" 
+                HorizontalAlignment="Left" 
+                Width="37" Height="20" 
+                VerticalAlignment="Top"/>
+        <Button Command="{Binding SelectPointCommand, Mode=OneWay}" Content="SelectPoint" Margin="0,86,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
+        <Button Command="{Binding OpenGrasshopperCommand, Mode=OneWay}" 
+                Content="Run GH" 
+                Margin="0,61,10,0" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right" 
+                Width="75"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="20" Margin="52,36,10,0" VerticalAlignment="Top">
+            <TextBlock Height="18" 
+                       LineStackingStrategy="BlockLineHeight"
+                       LineHeight="16"
+                       Margin="0,0,0,0" 
+                       TextTrimming="WordEllipsis"
+                       Background="White"
+                       TextWrapping="Wrap" 
+                       Text="{Binding EpwFilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                       VerticalAlignment="Top"/>
+        </Border>
     </Grid>
 </UserControl>
