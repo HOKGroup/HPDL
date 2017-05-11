@@ -1,12 +1,11 @@
-﻿using System;
+﻿using System.IO;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Grasshopper.Plugin;
 using Rhino;
 using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
-using System.IO;
+using Grasshopper.Plugin;
 
 namespace Apoorv.ViewModels
 {
@@ -48,10 +47,18 @@ namespace Apoorv.ViewModels
         /// </summary>
         private void OnOpenGrasshoper()
         {
-            var gh = RhinoApp.GetPlugInObject("Grasshopper") as GH_RhinoScriptInterface;
-            var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\\sampleFile.gh";
-            if (!File.Exists(dir)) return;
+            // (Konrad) This bit might have to change later since we are not likely to publish
+            // this plug-in with that same folder structure. This is solely caused by the fact
+            // that we are debugging this and *bin/ folders are ignored from GitHub.
+            var newPath = string.Empty;
+            var dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            if (dir != null)
+            {
+                newPath = Path.GetFullPath(Path.Combine(dir, @"..\..\..\")) + @"_Samples\sampleFile.gh";
+            }
+            if (!File.Exists(newPath)) return;
 
+            var gh = RhinoApp.GetPlugInObject("Grasshopper") as GH_RhinoScriptInterface;
             gh?.OpenDocument(dir);
             gh?.HideEditor();
             gh?.AssignDataToParameter("1f808148-f532-4d5a-8a1e-8b0cec03975f", EpwFilePath);
